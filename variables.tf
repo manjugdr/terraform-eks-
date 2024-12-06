@@ -1,39 +1,41 @@
 variable "aws_region" {
-  description = "AWS Region"
+  description = "The AWS region where EKS cluster will be deployed"
   type        = string
+  default     = "ap-south-1"
 }
 
 variable "cluster_name" {
-  description = "Name of the EKS Cluster"
+  description = "The name of the EKS cluster"
   type        = string
+  default     = "my-eks-cluster"
 }
 
 variable "cluster_version" {
-  description = "Kubernetes version for the EKS cluster"
+  description = "The Kubernetes version for the EKS cluster"
   type        = string
   default     = "1.27"
 }
 
 variable "vpc_id" {
-  description = "VPC ID where the cluster will be deployed"
+  description = "VPC ID where the EKS cluster will be deployed"
   type        = string
 }
 
-variable "subnets" {
-  description = "Subnets for EKS deployment"
+variable "subnet_ids" {
+  description = "Subnets for the EKS cluster"
   type        = list(string)
 }
 
-variable "node_desired_capacity" {
-  description = "Desired number of nodes in the node group"
-  type        = number
-  default     = 2
+variable "node_instance_type" {
+  description = "Instance type for EKS worker nodes"
+  type        = string
+  default     = "t3.medium"
 }
 
-variable "node_max_capacity" {
-  description = "Maximum number of nodes in the node group"
+variable "node_desired_capacity" {
+  description = "Desired number of nodes"
   type        = number
-  default     = 4
+  default     = 2
 }
 
 variable "node_min_capacity" {
@@ -42,14 +44,17 @@ variable "node_min_capacity" {
   default     = 1
 }
 
-variable "node_instance_type" {
-  description = "Instance type for worker nodes"
-  type        = string
-  default     = "t3.medium"
+variable "node_max_capacity" {
+  description = "Maximum number of nodes in the node group"
+  type        = number
+  default     = 4
 }
 
 variable "tags" {
-  description = "Tags to associate with resources"
+  description = "Tags to apply to all resources"
   type        = map(string)
-  default     = {}
+  default     = {
+    Environment = "dev"
+    Project     = "eks-cluster"
+  }
 }
